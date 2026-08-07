@@ -1,0 +1,13 @@
+# secrets
+.env
+
+# runtime data
+memory.json
+rate_state.json
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/

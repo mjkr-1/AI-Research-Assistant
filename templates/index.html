@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResearchOS — AI Research Agent</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">&#9670;</span>
+      <span>Research<span class="accent-text">OS</span></span>
+    </div>
+    <span id="status-badge" class="badge">Checking…</span>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-tab="research" role="tab">Research</button>
+    <button class="tab" data-tab="literature" role="tab">Literature</button>
+    <button class="tab" data-tab="citations" role="tab">Citations</button>
+    <button class="tab" data-tab="plagiarism" role="tab">Plagiarism</button>
+  </nav>
+
+  <main>
+    <section id="tab-research" class="panel active" role="tabpanel">
+      <h2>Research Assistant</h2>
+      <p class="muted">Ask a question — the agent researches it, writes an article, and reviews it.</p>
+      <form id="research-form">
+        <label for="question">Research question</label>
+        <textarea id="question" rows="3" placeholder="e.g. Latest advancements in AI research" required></textarea>
+        <div class="row">
+          <button type="submit" class="primary">Run Research</button>
+          <button type="button" id="clear-history" class="ghost">Clear History</button>
+        </div>
+      </form>
+      <div id="research-results" class="stack"></div>
+    </section>
+
+    <section id="tab-literature" class="panel" role="tabpanel" hidden>
+      <h2>Literature Search</h2>
+      <p class="muted">Finds academic papers across arXiv, Semantic Scholar, and Crossref.</p>
+      <form id="literature-form">
+        <div class="search-bar">
+          <input id="lit-query" type="text" placeholder="e.g. transformers neural machine translation" required>
+          <button type="submit" class="primary">Search</button>
+        </div>
+      </form>
+      <div id="lit-results" class="grid"></div>
+    </section>
+
+    <section id="tab-citations" class="panel" role="tabpanel" hidden>
+      <h2>Citation Generator</h2>
+      <p class="muted">Build a formatted citation in seconds.</p>
+
+      <div class="card">
+        <div class="row">
+          <div class="field">
+            <label for="cit-style">Style</label>
+            <select id="cit-style">
+              <option>APA</option>
+              <option>MLA</option>
+              <option>Chicago</option>
+              <option>IEEE</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cit-kind">Source type</label>
+            <select id="cit-kind">
+              <option value="journal">Journal article</option>
+              <option value="website">Website</option>
+              <option value="book">Book</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="cit-title">Title *</label>
+          <input id="cit-title" type="text" placeholder="Title of the work">
+        </div>
+        <div class="field">
+          <label for="cit-authors">Authors</label>
+          <input id="cit-authors" type="text" placeholder="e.g. Ada Lovelace, Grace Hopper">
+        </div>
+        <div class="row">
+          <div class="field"><label for="cit-year">Year</label><input id="cit-year" type="number" placeholder="2024"></div>
+          <div class="field"><label for="cit-venue">Journal / Site</label><input id="cit-venue" type="text" placeholder="Journal or website name"></div>
+        </div>
+        <div id="cit-journal-fields" class="row">
+          <div class="field"><label for="cit-volume">Volume</label><input id="cit-volume" type="text" placeholder="12"></div>
+          <div class="field"><label for="cit-issue">Issue</label><input id="cit-issue" type="text" placeholder="3"></div>
+          <div class="field"><label for="cit-pages">Pages</label><input id="cit-pages" type="text" placeholder="45–60"></div>
+        </div>
+        <div id="cit-book-fields" class="row" hidden>
+          <div class="field"><label for="cit-city">City</label><input id="cit-city" type="text" placeholder="Cambridge"></div>
+          <div class="field"><label for="cit-publisher">Publisher</label><input id="cit-publisher" type="text" placeholder="MIT Press"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="cit-url">URL</label><input id="cit-url" type="text" placeholder="https://…"></div>
+          <div class="field"><label for="cit-doi">DOI</label><input id="cit-doi" type="text" placeholder="10.xxxx/xxxx"></div>
+        </div>
+        <div class="row">
+          <button type="button" id="cit-generate" class="primary">Generate Citation</button>
+          <button type="button" id="cit-copy" class="ghost" hidden>Copy</button>
+        </div>
+      </div>
+
+      <div id="cit-output" class="stack"></div>
+    </section>
+
+    <section id="tab-plagiarism" class="panel" role="tabpanel" hidden>
+      <h2>Originality Check</h2>
+      <p class="muted">Heuristic similarity check against your past articles and related literature.</p>
+      <form id="plagiarism-form">
+        <label for="plag-text">Text to check</label>
+        <textarea id="plag-text" rows="8" placeholder="Paste an article, essay, or research output here…"></textarea>
+        <div class="row">
+          <button type="submit" class="primary">Check Originality</button>
+          <button type="button" id="plag-last" class="ghost">Use last article</button>
+        </div>
+      </form>
+      <div id="plag-results" class="stack"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

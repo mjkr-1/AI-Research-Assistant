@@ -17,7 +17,7 @@ ssl_context = ssl.create_default_context(cafile=certifi.where())
 daily_limiter = RateLimiter(max_calls=200, period=86400, state_file="rate_state.json")
 minute_limiter = RateLimiter(max_calls=20, period=60)
 
-api_key = os.environ.get("OPENROUTER_API_KEY")
+api_key = os.getenv("OPENROUTER_API_KEY")
 if not api_key:
     env_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
     if os.path.exists(env_file):

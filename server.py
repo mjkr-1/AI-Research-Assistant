@@ -135,11 +135,13 @@ def too_large(e):
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    url = f"http://127.0.0.1:{port}/"
-    print(f"AI Research Agent running at {url}")
+    print(f"AI Research Agent running on port {port}")
     if _api_key_set():
         print("API key detected.")
     else:
         print("Warning: no API key available; /api/research will fail.")
-    threading.Timer(1.0, webbrowser.open, args=[url]).start()
-    app.run(host="127.0.0.1", port=port, debug=False, threaded=True)
+    try:
+        threading.Timer(1.0, webbrowser.open, args=[f"http://127.0.0.1:{port}/"]).start()
+    except Exception:
+        pass
+    app.run(host="0.0.0.0", port=port, debug=False, threaded=True)

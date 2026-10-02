@@ -8,3 +8,5 @@ services:
     envVars:
       - key: OPENROUTER_API_KEY
         sync: false
+      - key: OPENROUTER_DAILY_LIMIT
+        value: "50"

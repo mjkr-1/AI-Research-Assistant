@@ -14,7 +14,11 @@ endpoint = "https://openrouter.ai/api/v1/chat/completions"
 model = "nvidia/nemotron-3-ultra-550b-a55b:free"
 ssl_context = ssl.create_default_context(cafile=certifi.where())
 
-daily_limiter = RateLimiter(max_calls=200, period=86400, state_file="rate_state.json")
+daily_limiter = RateLimiter(
+    max_calls=int(os.environ.get("OPENROUTER_DAILY_LIMIT", "50")),
+    period=86400,
+    state_file="rate_state.json",
+)
 minute_limiter = RateLimiter(max_calls=20, period=60)
 
 api_key = os.getenv("OPENROUTER_API_KEY")
